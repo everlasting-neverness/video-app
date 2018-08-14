@@ -66,9 +66,9 @@ class Item extends React.Component {
                 </span>
               </div>
             </div>
+            <button className="item-button"><Link to="/">Go back</Link></button>
           </div>
         )}
-        <button className="item-button"><Link to="/">Go back</Link></button>
       </div>
     );
   }

@@ -1,3 +1,8 @@
+:root {
+  --dark: #111;
+  --light: #f2f2f2;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -5,9 +10,14 @@
 }
 
 body {
-  background: linear-gradient(to top, #c4ffda , #21c25c);
+  background: linear-gradient(to top, var(--light), #3b5998);
   background-repeat: no-repeat;
   font-family: serif;
+}
+
+a:visited {
+  text-decoration: none;
+  color: var(--dark);
 }
 
 .main-block {
@@ -15,49 +25,49 @@ body {
 }
 
 .top-menu {
-  padding: 15px;
-  padding-left: 50px;
-  padding-right: 50px;
-  display: flex;
+  padding: 15px 0;
+  display: grid;
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
 }
 
 .title {
-  margin-right: 30px;
-  margin-top: 10px;
-  font-size: 40px;
+  font-size: 60px;
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: "Faster One", cursive;
+  color: var(--dark);
+  margin-left: 60px;
 }
 
 form {
-  padding-left: 15px;
-  padding-top: 10px;
-  width: 30%;
+  display: flex;
 }
 
 input {
   padding: 5px;
   border: none;
-
   height: 35px;
 }
 
 input:focus {
-  background-color: #c4ffda;
+  background-color: var(--light);
 }
 
 button {
   margin-left: 15px;
-  padding: 10px;
+  padding: 9px;
   border: none;
   background-color: white;
   font-weight: bold;
+  border: 1px solid white;
+  transition: 0.3s;
 }
 
 button:hover {
-  background-color: #cbf7db;
+  border: 1px solid var(--dark);
+  cursor: pointer;
 }
 
 .block-for-movies {
@@ -85,43 +95,57 @@ button:hover {
   font-size: 15px;
   font-family: sans-serif;
   font-weight: bold;
+  color: var(--dark);
 }
 
 .item-block {
- padding: 30px;
- font-family: sans-serif;
-
+  padding: 30px;
+  font-family: sans-serif;
+  display: grid;
+  grid-template-areas:
+    "poster info info"
+    "poster button button";
+  grid-template-columns: fit-content(300px) fit-content(300px);
+  justify-items: start;
+  grid-gap: 20px;
 }
 
 .poster-block {
- display: inline-block;
- float:left;
+  grid-area: poster;
+  display: block;
+  float: left;
+  width: 300px;
 }
 
 .item-information {
-  display: inline-block;
-  margin-left: 20px;
-  padding: 10px;
+  grid-area: info;
+  display: block;
+  padding: 10px 0;
 }
 
 .img-item {
-
+  width: 100%;
 }
 
 .item-common-block {
   padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-gap: 20px;
 }
 
 .item-common-info {
   font-size: 30px;
   color: darkblue;
   font-weight: bold;
+  display: block;
 }
 
 .item-common-info-value {
   margin-left: 10px;
   font-size: 30px;
-
+  color: var(--dark);
+  display: block;
 }
 
 .plot {
@@ -130,11 +154,45 @@ button:hover {
 }
 
 .plot-content {
- display: inline-block;
- font-weight: normal;
- max-width: 850px;
+  display: inline-block;
+  font-weight: normal;
+  max-width: 850px;
 }
 
 .item-button {
-  display: inline-block;
+  margin-left: 0;
+  grid-area: button;
+  display: block;
+  width: 73px;
+  height: 34px;
+}
+
+.item-button a {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+@media (max-width: 555px) {
+  .top-menu {
+    grid-template-columns: 100%;
+  }
+  .title {
+    margin-left: 0;
+  }
+  .item-block {
+    grid-template-areas:
+      "poster"
+      "info"
+      "button";
+  }
+  .poster-block {
+    width: 281px;
+  }
+}
+
+@media (max-width: 1330px) {
+  .item-common-block {
+    grid-template-columns: 1fr;
+  }
 }

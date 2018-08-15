@@ -70,6 +70,17 @@ button:hover {
   cursor: pointer;
 }
 
+.sub-menu-block {
+  padding-right: 50px;
+  text-align: right;
+}
+
+.sub-menu-select {
+  width: 100px;
+  margin: 5px;
+  padding: 5px;
+}
+
 .block-for-movies {
   margin: 0 auto;
   max-width: 1300px;
@@ -194,5 +205,8 @@ button:hover {
 @media (max-width: 1330px) {
   .item-common-block {
     grid-template-columns: 1fr;
+  }
+  .sub-menu-block {
+    padding-right: 0;
   }
 }

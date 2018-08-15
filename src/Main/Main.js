@@ -21,14 +21,14 @@ class Main extends React.Component {
       movies: null,
       userSearch: "",
       type: "Title",
-      way: "decr"
+      direction: "decr"
     };
     getData(this.state.userSearch, this.getMovies);
   }
 
-  getMovies = incommingMovies => {
-    this.sortMovies(incommingMovies);
-    this.setState({ movies: incommingMovies });
+  getMovies = incomingMovies => {
+    this.sortMovies(incomingMovies, this.state.type, this.state.direction);
+    this.setState({ movies: incomingMovies });
   };
 
   componentDidMount = () => {
@@ -42,7 +42,6 @@ class Main extends React.Component {
   componentDidUpdate = () => {
     const prevSearch = JSON.stringify(this.state.movies);
     localStorage.setItem("prevSearch", prevSearch);
-    this.sortMovies(this.state.movies);
   };
 
   handleUserInput = e => {
@@ -55,25 +54,32 @@ class Main extends React.Component {
   handleSubMenuSelect = e => {
     const value = e.target.value;
     if (value !== this.state[e.target.name]) {
-      console.log(value);
-      if (e.target.name === 'type') {
+      if (e.target.name === "type") {
         this.setState({ type: value });
       } else {
-        this.setState({ way: value });
+        this.setState({ direction: value });
       }
-      console.log(this.state.type);
     }
+    let type = e.target.name === "type" ? value : this.state.type;
+    let direction =
+      e.target.name === "direction" ? value : this.state.direction;
+    this.sortMovies(this.state.movies, type, direction);
   };
 
-  sortMovies = (movies) => {
-    // console.log(this.state.type);
+  sortMovies = (movies, type, direction) => {
+    if (!type) {
+      type = "Title";
+    } else if (!direction) {
+      direction = "decr";
+    }
     movies.Search.sort((a, b) => {
-      if (this.state.way === "decr") {
-        return a[this.state.type] > b[this.state.type] ? 1 : -1;
+      if (direction === "decr") {
+        return a[type] < b[type] ? 1 : -1;
       } else {
-        return a[this.state.type] < b[this.state.type] ? 1 : -1;
+        return a[type] > b[type] ? 1 : -1;
       }
     });
+    this.setState({ movies: movies });
   };
 
   render() {
@@ -86,7 +92,7 @@ class Main extends React.Component {
         <SubMenu
           handleSubMenuSelect={this.handleSubMenuSelect}
           type={this.state.type}
-          way={this.state.way}
+          direction={this.state.direction}
         />
         <Block movies={this.state.movies} />
       </div>

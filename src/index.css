@@ -75,10 +75,15 @@ button:hover {
   text-align: right;
 }
 
+.sub-menu-form {
+  display: inline-block;
+}
+
 .sub-menu-select {
   width: 100px;
   margin: 5px;
   padding: 5px;
+  text-align: right;
 }
 
 .block-for-movies {

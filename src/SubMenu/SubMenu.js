@@ -1,32 +1,30 @@
 import React from "react";
 
-class SubMenu extends React.Component {
-  render() {
-    return (
-      <div className="sub-menu-block">
+function SubMenu(props) {
+  return (
+    <div className="sub-menu-block">
+      <form className="sub-menu-form" onChange={props.handleSubMenuSelect}>
         <select
-          defaultValue={this.props.type}
+          defaultValue={props.type}
           name="type"
           id="select-type"
           className="sub-menu-select"
-          onChange={this.props.handleSubMenuSelect}
         >
           <option value="Year">Year</option>
           <option value="Title">Title</option>
         </select>
         <select
-          defaultValue={this.props.way}
-          name="way"
-          id="select-way"
+          defaultValue={props.direction}
+          name="direction"
+          id="select-direction"
           className="sub-menu-select"
-          onChange={this.props.handleSubMenuSelect}
         >
           <option value="incr">Increase</option>
           <option value="decr">Decrease</option>
         </select>
-      </div>
-    );
-  }
+      </form>
+    </div>
+  );
 }
 
 export default SubMenu;

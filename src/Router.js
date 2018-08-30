@@ -1,9 +1,10 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
-import createBrowserHistory from "history/createBrowserHistory"
+import createBrowserHistory from "history/createBrowserHistory";
 
 import Item from "./Item/Item.js";
 import Main from "./Main/Main.js";
+import Nav from "./Nav/Nav.js";
 
 const history = createBrowserHistory();
 
@@ -16,7 +17,7 @@ class DefaultRouter extends React.Component {
           <Route path="/movie/:id" component={Item} />
         </Switch>
       </Router>
-    )
+    );
   }
 }
 

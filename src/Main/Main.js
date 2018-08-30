@@ -19,6 +19,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       movies: null,
+      load: true,
       userSearch: "",
       type: "Title",
       direction: "decr"
@@ -47,7 +48,7 @@ class Main extends React.Component {
   handleUserInput = e => {
     e.preventDefault();
     getData(e.target[0].value, this.getMovies);
-    this.setState({ userSearch: e.target[0].value });
+    this.setState({ userSearch: e.target[0].value, load: !this.state.load });
     return false;
   };
 
@@ -79,7 +80,7 @@ class Main extends React.Component {
         return a[type] > b[type] ? 1 : -1;
       }
     });
-    this.setState({ movies: movies });
+    this.setState({ movies: movies, load: !this.state.load });
   };
 
   render() {
@@ -94,7 +95,7 @@ class Main extends React.Component {
           type={this.state.type}
           direction={this.state.direction}
         />
-        <Block movies={this.state.movies} />
+        <Block movies={this.state.movies} load={this.state.load} />
       </div>
     );
   }

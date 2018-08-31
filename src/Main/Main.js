@@ -1,7 +1,13 @@
 import React from "react";
-import SearchForm from "../SearchForm/SearchForm";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Router, Route, Switch } from "react-router-dom";
+import createBrowserHistory from "history/createBrowserHistory";
 import Block from "../Block/Block";
 import SubMenu from "../SubMenu/SubMenu.js";
+import Item from "../Item/Item.js";
+import Nav from "../Nav/Nav.js";
+
+const history = createBrowserHistory();
 
 function getData(search, fn) {
   if (!search) {
@@ -47,6 +53,7 @@ class Main extends React.Component {
 
   handleUserInput = e => {
     e.preventDefault();
+    console.log(e.target[0].value);
     getData(e.target[0].value, this.getMovies);
     this.setState({ userSearch: e.target[0].value, load: !this.state.load });
     return false;
@@ -84,19 +91,40 @@ class Main extends React.Component {
   };
 
   render() {
+    const MyNav = props => {
+      return <Nav handleUserInput={this.handleUserInput} />;
+    };
     return (
-      <div className="main-block">
-        <div className="top-menu">
-          <SearchForm handleUserInput={this.handleUserInput} />
-          <div className="title">Video</div>
+      <Router history={history}>
+        <div className="main-block">
+          <Route path="/" component={MyNav} />
+          <Switch>
+            <Route exact path="/">
+              <div>
+                <SubMenu
+                  handleSubMenuSelect={this.handleSubMenuSelect}
+                  type={this.state.type}
+                  direction={this.state.direction}
+                />
+                <TransitionGroup
+                  className="movie-section"
+                  component={"section"}
+                >
+                  <CSSTransition
+                    key={this.state.load}
+                    appear={true}
+                    timeout={2000}
+                    classNames="block"
+                  >
+                    <Block movies={this.state.movies} load={this.state.load} />
+                  </CSSTransition>
+                </TransitionGroup>
+              </div>
+            </Route>
+            <Route path="/movie/:id" component={Item} />
+          </Switch>
         </div>
-        <SubMenu
-          handleSubMenuSelect={this.handleSubMenuSelect}
-          type={this.state.type}
-          direction={this.state.direction}
-        />
-        <Block movies={this.state.movies} load={this.state.load} />
-      </div>
+      </Router>
     );
   }
 }

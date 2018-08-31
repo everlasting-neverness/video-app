@@ -16,6 +16,10 @@ body {
   height: 100vh;
 }
 
+a {
+  text-decoration: none;
+}
+
 a:visited {
   text-decoration: none;
   color: var(--dark);
@@ -34,6 +38,10 @@ a:visited {
   grid-gap: 20px;
 }
 
+.navbar {
+  display: flex;
+}
+
 .title {
   font-size: 60px;
   font-weight: bold;
@@ -44,12 +52,12 @@ a:visited {
 
 form {
   display: flex;
+  width: 100%;
 }
 
 input {
   padding: 5px;
   border: none;
-  height: 35px;
 }
 
 input:focus {
@@ -60,6 +68,7 @@ button {
   margin-left: 15px;
   padding: 9px;
   border: none;
+  border-radius: 5px;
   background-color: white;
   font-weight: bold;
   border: 1px solid white;

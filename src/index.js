@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DefaultRouter from "./Router.js"
+import Main from "./Main/Main.js";
 import "./index.css";
 
-ReactDOM.render(<DefaultRouter />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById("root"));

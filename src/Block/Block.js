@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 class Block extends React.Component {
   render() {
@@ -28,18 +27,7 @@ class Block extends React.Component {
         );
       });
     }
-    return (
-      <TransitionGroup className="movie-section" component={'section'} >
-        <CSSTransition
-          key={this.props.load}
-          appear={true}
-          timeout={2000}
-          classNames="block"
-        >
-          <div className="block-for-movies">{moviesToRender}</div>
-        </CSSTransition>
-      </TransitionGroup>
-    );
+    return <div className="block-for-movies">{moviesToRender}</div>;
   }
 }
 

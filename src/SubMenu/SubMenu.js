@@ -1,9 +1,20 @@
 import React from "react";
+import Pagination from "./Pagination/Pagination.js";
 
 function SubMenu(props) {
   return (
     <div className="sub-menu-block">
-      <form className="sub-menu-form" onChange={props.handleSubMenuSelect}>
+      <div className="pagination-block">
+        <Pagination
+          numberOfPages={props.numberOfPages}
+          moviesPageNumber={props.moviesPageNumber}
+          handleMoviesPageChange={props.handleMoviesPageChange}
+        />
+      </div>
+      <form
+        className="sub-menu-form"
+        onChange={props.handleSubMenuTypeDirectionSelect}
+      >
         <select
           defaultValue={props.type}
           name="type"

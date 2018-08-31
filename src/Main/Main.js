@@ -6,17 +6,18 @@ import Block from "../Block/Block";
 import SubMenu from "../SubMenu/SubMenu.js";
 import Item from "../Item/Item.js";
 import Nav from "../Nav/Nav.js";
+import Footer from "../Footer/Footer.js";
 
 const history = createBrowserHistory();
 
-function getData(search, fn) {
+function getData(search, fn, number) {
   if (!search) {
     search = "top";
   }
-  const url = `http://www.omdbapi.com/?s=${search}&apikey=b1a126bc`;
+  const url = `http://www.omdbapi.com/?s=${search}&apikey=b1a126bc&page=${number}`;
   fetch(url)
     .then(data => data.json())
-    .then(data => fn(data))
+    .then(data => fn(data, url))
     .catch(error => console.log(error));
 }
 
@@ -27,13 +28,15 @@ class Main extends React.Component {
       movies: null,
       load: true,
       userSearch: "",
+      numberOfPages: 10,
+      moviesPageNumber: "1",
       type: "Title",
       direction: "decr"
     };
-    getData(this.state.userSearch, this.getMovies);
+    getData(this.state.userSearch, this.getMovies, this.state.moviesPageNumber);
   }
 
-  getMovies = incomingMovies => {
+  getMovies = (incomingMovies, url) => {
     this.sortMovies(incomingMovies, this.state.type, this.state.direction);
     this.setState({ movies: incomingMovies });
   };
@@ -53,13 +56,21 @@ class Main extends React.Component {
 
   handleUserInput = e => {
     e.preventDefault();
-    console.log(e.target[0].value);
     getData(e.target[0].value, this.getMovies);
-    this.setState({ userSearch: e.target[0].value, load: !this.state.load });
+    this.setState({
+      userSearch: e.target[0].value,
+      load: !this.state.load,
+      moviesPageNumber: 1
+    });
     return false;
   };
 
-  handleSubMenuSelect = e => {
+  handleMoviesPageChange = e => {
+    getData(this.state.userSearch, this.getMovies, e.target.value);
+    this.setState({ moviesPageNumber: e.target.value });
+  };
+
+  handleSubMenuTypeDirectionSelect = e => {
     const value = e.target.value;
     if (value !== this.state[e.target.name]) {
       if (e.target.name === "type") {
@@ -87,7 +98,7 @@ class Main extends React.Component {
         return a[type] > b[type] ? 1 : -1;
       }
     });
-    this.setState({ movies: movies, load: !this.state.load });
+    this.setState({ movies: movies });
   };
 
   render() {
@@ -100,9 +111,14 @@ class Main extends React.Component {
           <Route path="/" component={MyNav} />
           <Switch>
             <Route exact path="/">
-              <div>
+              <section className="main-section">
                 <SubMenu
-                  handleSubMenuSelect={this.handleSubMenuSelect}
+                  numberOfPages={this.state.numberOfPages}
+                  handleMoviesPageChange={this.handleMoviesPageChange}
+                  moviesPageNumber={this.state.moviesPageNumber}
+                  handleSubMenuTypeDirectionSelect={
+                    this.handleSubMenuTypeDirectionSelect
+                  }
                   type={this.state.type}
                   direction={this.state.direction}
                 />
@@ -113,16 +129,17 @@ class Main extends React.Component {
                   <CSSTransition
                     key={this.state.load}
                     appear={true}
-                    timeout={2000}
+                    timeout={700}
                     classNames="block"
                   >
                     <Block movies={this.state.movies} load={this.state.load} />
                   </CSSTransition>
                 </TransitionGroup>
-              </div>
+              </section>
             </Route>
             <Route path="/movie/:id" component={Item} />
           </Switch>
+          <Route path="/" component={Footer} />
         </div>
       </Router>
     );

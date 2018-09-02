@@ -8,7 +8,7 @@ class Item extends React.Component {
   };
 
   componentDidMount = async () => {
-    const search = this.props.location.state.movie;
+    const search = this.props.match.params.id;
     const req = await fetch(
       `http://www.omdbapi.com/?i=${search}&apikey=b1a126bc`
     );
@@ -66,7 +66,9 @@ class Item extends React.Component {
                 </span>
               </div>
             </div>
-            <button className="item-button"><Link to="/">Go back</Link></button>
+            <button className="item-button">
+              <Link to="/">Go back</Link>
+            </button>
           </div>
         )}
       </div>

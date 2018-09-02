@@ -112,6 +112,13 @@ button:hover {
   color: var(--light);
 }
 
+.dots {
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 10px;
+  color: var(--light);
+}
+
 .sub-menu-form {
 }
 
@@ -124,10 +131,6 @@ button:hover {
   margin: 5px;
   padding: 5px;
   text-align: right;
-}
-
-.movie-section {
-  position: relative;
 }
 
 .block-for-movies {
@@ -144,7 +147,7 @@ button:hover {
 
 .movie-block {
   max-width: 220px;
-  max-height: 400px;
+  height: 400px;
   text-align: center;
 }
 

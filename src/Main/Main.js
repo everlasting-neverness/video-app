@@ -28,7 +28,7 @@ class Main extends React.Component {
       movies: null,
       load: true,
       userSearch: "",
-      numberOfPages: 10,
+      numberOfPages: 100,
       moviesPageNumber: "1",
       type: "Title",
       direction: "decr"
@@ -41,7 +41,7 @@ class Main extends React.Component {
     this.setState({ movies: incomingMovies });
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     let prevSearch = localStorage.getItem("prevSearch");
     if (prevSearch !== undefined) {
       prevSearch = JSON.parse(prevSearch);
@@ -49,7 +49,7 @@ class Main extends React.Component {
     }
   };
 
-  componentDidUpdate = () => {
+  componentDidUpdate() {
     const prevSearch = JSON.stringify(this.state.movies);
     localStorage.setItem("prevSearch", prevSearch);
   };
